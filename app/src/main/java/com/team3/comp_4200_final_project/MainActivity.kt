@@ -2,6 +2,7 @@ package com.team3.comp_4200_final_project
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -18,9 +19,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Display main fragment
-        val fram = supportFragmentManager.beginTransaction()
-        fram.replace(R.id.fragment, MainFragment())
-        fram.commit()
+        supportFragmentManager.commit {
+            replace(R.id.fragment, MainFragment())
+        }
 
         // Get drawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -38,24 +39,18 @@ class MainActivity : AppCompatActivity() {
         // Listener to change fragment based on which option was chosen in the nav drawer
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.home -> {
+                    supportFragmentManager.commit { replace(R.id.fragment, MainFragment()) }
+                }
                 R.id.timetable -> {
                     supportFragmentManager.commit { replace(R.id.fragment, TimetableFragment()) }
-//                    drawerLayout.closeDrawer(GravityCompat.START)
-//                    true
                 }
                 R.id.class_search -> {
                     supportFragmentManager.commit { replace(R.id.fragment, ClassSearchFragment()) }
-//                    drawerLayout.closeDrawer(GravityCompat.START)
-//                    true
                 }
                 R.id.settings -> {
                     supportFragmentManager.commit { replace(R.id.fragment, SettingsFragment()) }
-//                    drawerLayout.closeDrawer(GravityCompat.START)
-//                    true
                 }
-//                else -> {
-//                    false
-//                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
@@ -63,7 +58,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        drawerLayout.openDrawer(navView)
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
         return true
     }
 
