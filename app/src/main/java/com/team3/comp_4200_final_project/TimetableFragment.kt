@@ -32,9 +32,11 @@ class TimetableFragment : Fragment() {
 
     // Overriding onCreateView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_timetable,container,false)
+    }
 
-        // Get view
-        val view =  inflater.inflate(R.layout.fragment_timetable,container,false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // TimetableFragmentPagerAdapter extends FragmentStateAdapter()
         fragmentPagerAdapter = TimetableFragmentPagerAdapter(childFragmentManager, tabs,  lifecycle)
@@ -56,8 +58,5 @@ class TimetableFragment : Fragment() {
             val i = Intent(view.context, SearchActivity::class.java)
             startActivity(i)
         }
-
-        // Return view
-        return view
     }
 }
