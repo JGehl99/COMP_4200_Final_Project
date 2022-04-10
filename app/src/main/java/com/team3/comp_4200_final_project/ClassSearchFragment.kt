@@ -1,5 +1,6 @@
 package com.team3.comp_4200_final_project
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,7 @@ class ClassSearchFragment : Fragment() {
 
         reView = view.findViewById(R.id.recycler_view)
 
-        reAdapter = RecyclerAdapter(arr)
+        reAdapter = RecyclerAdapter(context, arr)
         reView.layoutManager = LinearLayoutManager(view.context)
         reView.adapter = reAdapter
     }

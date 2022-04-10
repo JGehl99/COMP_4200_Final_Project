@@ -10,10 +10,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter (c: Context, private val arr: ArrayList<ClassData>): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>(){
+class RecyclerAdapter (c: Context?, private val arr: ArrayList<ClassData>): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>(){
 
     private lateinit var cardView: CardView     // Initializing CardView
-    private var context: Context = c            // Context passed in
+    private var context: Context? = c            // Context passed in
 
     // ItemViewHolder class, get Views
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,7 +44,7 @@ class RecyclerAdapter (c: Context, private val arr: ArrayList<ClassData>): Recyc
                  putExtra("courseName", arr[position].courseName)
                  putExtra("courseCode", arr[position].courseCode)
              }
-            context.startActivity(i)
+            context?.startActivity(i)
         }
     }
 

@@ -35,7 +35,7 @@ class DayFragment : Fragment() {
         val reView: RecyclerView = view.findViewById(R.id.recycler_view)
 
         // Pass classes to RecyclerAdapter to create list of classes using this info
-        val reAdapter = RecyclerAdapter(classes)
+        val reAdapter = RecyclerAdapter(context, classes)
 
         reView.layoutManager = LinearLayoutManager(view.context)
         reView.adapter = reAdapter
