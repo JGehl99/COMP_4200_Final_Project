@@ -1,14 +1,11 @@
 package com.team3.comp_4200_final_project
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerAdapter (c: Context, a:ArrayList<RecyclerViewCard>): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>(){
@@ -21,6 +18,8 @@ class RecyclerAdapter (c: Context, a:ArrayList<RecyclerViewCard>): RecyclerView.
     class ItemViewHolder(itemView: View):  RecyclerView.ViewHolder(itemView){
         val courseCodeTextView: TextView = itemView.findViewById(R.id.course_code)
         val courseNameTextView: TextView = itemView.findViewById(R.id.course_name)
+        val courseTimeRangeTextView: TextView = itemView.findViewById(R.id.course_time_range)
+        val courseDays: TextView = itemView.findViewById(R.id.course_days)
         val cardView: CardView = itemView.findViewById(R.id.course_card)
     }
 
@@ -36,6 +35,8 @@ class RecyclerAdapter (c: Context, a:ArrayList<RecyclerViewCard>): RecyclerView.
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.courseCodeTextView.text = arr[position].courseCode
         holder.courseNameTextView.text = arr[position].courseName
+        holder.courseTimeRangeTextView.text = arr[position].courseTimeRange
+        holder.courseDays.text = arr[position].courseDays
         holder.cardView.setOnClickListener{
             // TODO: Add on click listener to either: bring up course page, or add to timetable
         }

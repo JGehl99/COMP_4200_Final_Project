@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
     android:id="@+id/course_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,28 +10,55 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <androidx.gridlayout.widget.GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        app:columnCount="2"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/course_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:text="@string/comp_3670"
-            android:textAlignment="center"
             android:textAllCaps="true"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_column="0"
+            app:layout_columnWeight="2" />
 
         <TextView
             android:id="@+id/course_name"
-            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:text="@string/computer_networking"
-            android:textAlignment="center"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:textSize="16sp"
+            app:layout_column="1"
+            app:layout_columnWeight="1"/>
+
+        <TextView
+            android:id="@+id/course_days"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:text="Mon, Wed"
+            android:textSize="16sp"
+            app:layout_column="0"
+            app:layout_columnWeight="2"/>
+
+
+        <TextView
+            android:id="@+id/course_time_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="1:00pm-2:50pm"
+            android:textSize="16sp"
+            app:layout_column="1"
+            app:layout_columnWeight="1"/>
+
+    </androidx.gridlayout.widget.GridLayout>
 
 </androidx.cardview.widget.CardView>
