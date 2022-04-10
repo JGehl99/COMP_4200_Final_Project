@@ -3,18 +3,18 @@ package com.team3.comp_4200_final_project
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import com.google.android.material.tabs.TabLayout
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.google.android.material.tabs.TabLayout
 
 // Custom TabLayout to add separators between tabs, and to stretch tabs to fit TabBar if there aren't
 // enough tabs to cover the whole bar
-class TimetableTabLayout: TabLayout {
+class TimetableTabLayout : TabLayout {
     // TabLayout constructors
     constructor(c: Context) : super(c)
-    constructor(c: Context, a: AttributeSet): super(c, a)
-    constructor(c:Context, a: AttributeSet, dsa: Int) : super(c, a, dsa)
+    constructor(c: Context, a: AttributeSet) : super(c, a)
+    constructor(c: Context, a: AttributeSet, dsa: Int) : super(c, a, dsa)
 
     // This code is ran on initialization, add separator between tabs
     init {
