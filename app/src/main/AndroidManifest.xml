@@ -5,10 +5,13 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_uwin"
-        android:roundIcon="@mipmap/ic_uwin_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_uwin_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.COMP_4200_Final_Project">
+        <activity
+            android:name=".ClassDetails"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -20,8 +23,7 @@
         </activity>
         <activity
             android:name=".SearchActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

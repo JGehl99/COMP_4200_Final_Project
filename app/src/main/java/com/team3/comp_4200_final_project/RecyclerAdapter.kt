@@ -1,14 +1,19 @@
 package com.team3.comp_4200_final_project
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter(private val arr: ArrayList<ClassData>) :
-    RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>() {
+class RecyclerAdapter (c: Context, private val arr: ArrayList<ClassData>): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>(){
+
+    private lateinit var cardView: CardView     // Initializing CardView
+    private var context: Context = c            // Context passed in
 
     // ItemViewHolder class, get Views
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +40,11 @@ class RecyclerAdapter(private val arr: ArrayList<ClassData>) :
         holder.courseDays.text = arr[position].courseDays
         holder.cardView.setOnClickListener {
             // TODO: Add on click listener to either: bring up course page, or add to timetable
-
+             val i = Intent(this.context, ClassDetails::class.java).apply {
+                 putExtra("courseName", arr[position].courseName)
+                 putExtra("courseCode", arr[position].courseCode)
+             }
+            context.startActivity(i)
         }
     }
 
