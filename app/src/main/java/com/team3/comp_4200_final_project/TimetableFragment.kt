@@ -19,9 +19,7 @@ class TimetableFragment : Fragment() {
         "Tuesday",
         "Wednesday",
         "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
+        "Friday"
     )
 
     // lateinit View objects
@@ -30,20 +28,34 @@ class TimetableFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
+    private lateinit var week: SchoolWeek
+
     // Overriding onCreateView
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_timetable,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        // Get SchoolWeek object from arguments
+        arguments?.let{
+            week = it.getSerializable("week") as? SchoolWeek?:SchoolWeek()
+        }
+
+
+        return inflater.inflate(R.layout.fragment_timetable, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // TimetableFragmentPagerAdapter extends FragmentStateAdapter()
-        fragmentPagerAdapter = TimetableFragmentPagerAdapter(childFragmentManager, tabs,  lifecycle)
+        fragmentPagerAdapter = TimetableFragmentPagerAdapter(childFragmentManager, tabs, week, lifecycle)
 
         // Get viewPager View and set the adapter
         viewPager = view.findViewById(R.id.timetable_view_pager)
         viewPager.adapter = fragmentPagerAdapter
+        viewPager.offscreenPageLimit = 2
 
         // Get tabLayout View and bind it to viewPager with TabLayoutMediator.
         // The lambda will set the tab text based on the value at that position in the array
@@ -58,5 +70,15 @@ class TimetableFragment : Fragment() {
             val i = Intent(view.context, SearchActivity::class.java)
             startActivity(i)
         }
+    }
+
+    // Factory method to create new instance of TimetableFragment, passing in bundle info
+    companion object {
+        fun newInstance(week: SchoolWeek) =
+            TimetableFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("week", week)
+                }
+            }
     }
 }
