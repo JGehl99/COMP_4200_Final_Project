@@ -1,13 +1,13 @@
 package com.team3.comp_4200_final_project
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
+import java.sql.Time
 
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var actionBarToggle: ActionBarDrawerToggle
@@ -18,9 +18,78 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //TODO: Retrieve the information for the user's timetable in MainActivity, and pass it
+        // along to TimetableFragment, which will then pass it along to DayFragment, using this
+        // ArrayList as a placeholder until we decide the structure of the data structure
+
+        // Data required to be passed (Strings):
+        // Course Code
+        // Course Name
+        // Course Start Time
+        // Course End Time
+        // Course Days (ex: MWF, must parse in app)
+        // Course Location (building w/ #, Livestream, or Online)
+        // Course Professor
+
+        val week = SchoolWeek()
+        week.addClass(ClassData(
+            "COMP-3340",
+            "World Wide Web",
+            "7:00pm",
+            "9:50pm",
+            "F",
+            "Online",
+            "Ziad Kobti"
+        ))
+        week.addClass(ClassData(
+            "COMP-3340",
+            "World Wide Web",
+            "7:00pm",
+            "9:50pm",
+            "F",
+            "Online",
+            "Ziad Kobti"
+        ))
+        week.addClass(ClassData(
+            "COMP-3340",
+            "World Wide Web",
+            "7:00pm",
+            "9:50pm",
+            "F",
+            "Online",
+            "Ziad Kobti"
+        ))
+        week.addClass(ClassData(
+            "COMP-4540",
+            "Theory of Computation",
+            "1:00pm",
+            "2:30pm",
+            "MW",
+            "Erie 2110",
+            "Peter Tsin"
+        ))
+        week.addClass(ClassData(
+            "COMP-4200",
+            "Mobile App Dev",
+            "11:30am",
+            "12:50pm",
+            "TTH",
+            "Livestream (Hyflex)",
+            "Shaon Shuvo"
+        ))
+        week.addClass(ClassData(
+            "ANZO-1000",
+            "Animals and Humans in Society",
+            "11:30am",
+            "12:50pm",
+            "TF",
+            "Livestream (Hyflex)",
+            "Jane Smith"
+        ))
+
         // Display main fragment
         supportFragmentManager.commit {
-            replace(R.id.fragment, MainFragment())
+            replace(R.id.fragment, TimetableFragment.newInstance(week))
         }
 
         // Get drawerLayout
@@ -39,11 +108,8 @@ class MainActivity : AppCompatActivity() {
         // Listener to change fragment based on which option was chosen in the nav drawer
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.home -> {
-                    supportFragmentManager.commit { replace(R.id.fragment, MainFragment()) }
-                }
                 R.id.timetable -> {
-                    supportFragmentManager.commit { replace(R.id.fragment, TimetableFragment()) }
+                    supportFragmentManager.commit { replace(R.id.fragment, TimetableFragment.newInstance(week)) }
                 }
                 R.id.class_search -> {
                     supportFragmentManager.commit { replace(R.id.fragment, ClassSearchFragment()) }
