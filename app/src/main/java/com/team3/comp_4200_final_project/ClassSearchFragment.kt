@@ -7,10 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.willowtreeapps.fuzzywuzzy.diffutils.FuzzySearch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +27,7 @@ class ClassSearchFragment : Fragment() {
     private var arr: ArrayList<ClassData> = ArrayList()  // Creating ArrayList to hold Cards
     private lateinit var reAdapter: RecyclerAdapter // Initializing reAdapter
 
-    private lateinit var searchBar: EditText
+    private lateinit var searchBar: AutoCompleteTextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +52,7 @@ class ClassSearchFragment : Fragment() {
             .build()
             .create(UserService::class.java)
 
+        var autofillStrings = mutableListOf<String>()
         service.getCourses().enqueue(object : Callback<List<AutofillData>> {
 
             /* The HTTP call failed. This method is run on the main thread */
@@ -61,30 +65,27 @@ class ClassSearchFragment : Fragment() {
              * on a production app. This method is run on the main thread */
             override fun onResponse(call: Call<List<AutofillData>>, response: Response<List<AutofillData>>) {
                 /* This will print the response of the network call to the Logcat */
-                Log.d("TAG_", response.body().toString())
+                var results = response.body()
+                if (results != null) {
+                    for (result in results) {
+                        autofillStrings.add(result.courseCode)
+                        autofillStrings.add(result.courseName)
+                    }
+                }
+                //Log.d("TAG_", results.toString())
             }
         })
 
+        var aa = ArrayAdapter<String>(view.context, android.R.layout.simple_dropdown_item_1line, autofillStrings)
         searchBar = view.findViewById(R.id.search_field)
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-                Log.d("TAG_", p0.toString())
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //TODO("Not yet implemented")
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                //TODO("Not yet implemented")
-            }
-        })
+        searchBar.setAdapter(aa)
     }
 }
 
 /* Kotlin data/model classes that map the JSON response, we could also add Moshi
  * annotations to help the compiler with the mappings on a production app */
-data class AutofillData(val courseCode: String, val courseName: String)
+data class AutofillData(val courseCode: String, val courseName: String, val courseProf: List<Prof>)
+data class Prof(val firstName: String, val lastName: String)
 
 /* Retrofit service that maps the different endpoints on the API, you'd create one
  * method per endpoint, and use the @Path, @Query and other annotations to customize

@@ -20,18 +20,12 @@
         app:layout_constraintVertical_bias="0.0">
 
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/search_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="164dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/enter_class"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            tools:ignore="LabelFor,TextContrastCheck"
-            android:importantForAutofill="no" />
+            android:hint="Enter Class" />
 
         <Button
             android:id="@+id/search_button"
