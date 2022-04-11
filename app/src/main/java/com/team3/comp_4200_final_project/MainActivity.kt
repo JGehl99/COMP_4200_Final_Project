@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         // Course Days (ex: MWF, must parse in app)
         // Course Location (building w/ #, Livestream, or Online)
         // Course Professor
-
         val week = SchoolWeek()
         week.addClass(ClassData(
             "COMP-3340",
