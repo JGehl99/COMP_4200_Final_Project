@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClassDetails">
+    tools:context=".ClassSearchClassDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:layout_marginLeft="75dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="75dp"
-                android:text="Add to Calendar" />
+                android:text="Remove from Calendar" />
 
         </LinearLayout>
     </ScrollView>
