@@ -106,9 +106,15 @@ class ClassSearchFragment : Fragment() {
                                 // todo: make subsections better
                                 if (section.subsections != null && section.subsections.isNotEmpty()) {
                                     var subsec = section.subsections[0]
-                                    arr.add(
-                                        ClassData(result.courseCode, result.courseName, subsec.startTime, subsec.endTime, subsec.day, subsec.location, subsec.professors.toString())
-                                    )
+                                    arr.add(ClassData(
+                                        result.courseCode,
+                                        result.courseName,
+                                        subsec.startTime,
+                                        subsec.endTime,
+                                        parseDays(subsec.day).toString().drop(1).dropLast(1),
+                                        subsec.location,
+                                        subsec.professors.toString()
+                                    ))
                                 }
                             }
                         }

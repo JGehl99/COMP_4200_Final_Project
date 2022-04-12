@@ -1,5 +1,6 @@
 package com.team3.comp_4200_final_project
 
+import android.util.Log
 import java.io.Serializable
 
 // Class to hold all classes for each day of the week, implements Serializable so it can be passed
@@ -29,35 +30,44 @@ class SchoolWeek : Serializable {
         }
     }
 
-    // Function to parse passed in classDays string (formatted like: MWF, TWF, MTH, etc.)
-    private fun parseDays(str_: String): ArrayList<String>{
-        var str = str_
-        val arr = ArrayList<String>()
 
-        // Loop until str is empty, read first char, add day to list, then drop first char
-        // Special cases for T and TH since TH is the only one with two chars
-        while (str != ""){
-            if (str[0] == 'M') {
-                arr.add("Monday")
-                str = str.drop(1)
-            }
-            else if (str[0] == 'T' && str[1] != 'H') {
-                arr.add("Tuesday")
-                str = str.drop(1)
-            }
-            else if (str[0] == 'W') {
-                arr.add("Wednesday")
-                str = str.drop(1)
-            }
-            else if (str[0] == 'T' && str[1] == 'H') {
+}
+
+// Function to parse passed in classDays string (formatted like: MWF, TWF, MTH, etc.)
+fun parseDays(str_: String): ArrayList<String>{
+    var str = str_
+    val arr = ArrayList<String>()
+
+    // Loop until str is empty, read first char, add day to list, then drop first char
+    // Special cases for T and TH since TH is the only one with two chars
+    while (str.isNotEmpty()){
+        if (str[0] == 'M') {
+            arr.add("Monday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'W') {
+            arr.add("Wednesday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'F') {
+            arr.add("Friday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'T') {
+            if (str.length > 1 && str[1] == 'H') {
                 arr.add("Thursday")
                 str = str.drop(2)
+                continue
             }
-            else if (str[0] == 'F') {
-                arr.add("Friday")
-                str = str.drop(1)
-            }
+            arr.add("Tuesday")
+            str = str.drop(1)
+            continue
         }
-        return arr
+        Log.e("TAG_", "String does not match any letters! $str")
+        break
     }
+    return arr
 }
