@@ -43,6 +43,10 @@ class RecyclerAdapter (c: Context?, private val arr: ArrayList<ClassData>): Recy
              val i = Intent(this.context, ClassDetails::class.java).apply {
                  putExtra("courseName", arr[position].courseName)
                  putExtra("courseCode", arr[position].courseCode)
+                 putExtra("profName", arr[position].courseProfessor)
+                 putExtra("timeRange", arr[position].courseTimeRange)
+                 putExtra("courseDays", arr[position].courseDays)
+                 putExtra("courseLocation", arr[position].courseLocation)
              }
             context?.startActivity(i)
         }
