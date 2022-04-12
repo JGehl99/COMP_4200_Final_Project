@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.COMP_4200_Final_Project">
         <activity
-            android:name=".ClassDetails"
+            android:name=".ClassSearchClassDetails"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -23,7 +23,10 @@
         </activity>
         <activity
             android:name=".SearchActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
+        <activity
+            android:name=".TimetableClassDetails"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -1,8 +1,6 @@
 package com.team3.comp_4200_final_project
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +8,23 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.team3.comp_4200_final_project.db.Course
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 class ClassSearchFragment : Fragment() {
 
     private lateinit var reView: RecyclerView       // Initializing reView
-    private var arr: ArrayList<ClassData> = ArrayList()  // Creating ArrayList to hold Cards
-    private lateinit var reAdapter: RecyclerAdapter // Initializing reAdapter
-    private  lateinit var week: SchoolWeek
+    private var arr: ArrayList<Course> = ArrayList()  // Creating ArrayList to hold Cards
+    private lateinit var reAdapter: ClassSearchRecyclerAdapter // Initializing reAdapter
 
     private lateinit var searchBar: AutoCompleteTextView
 
@@ -43,14 +39,9 @@ class ClassSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get SchoolWeek object from arguments
-        arguments?.let{
-            week = it.getSerializable("week") as? SchoolWeek?:SchoolWeek()
-        }
-
         reView = view.findViewById(R.id.recycler_view)
 
-        reAdapter = RecyclerAdapter(context, arr, week)
+        reAdapter = ClassSearchRecyclerAdapter(context, arr)
         reView.layoutManager = LinearLayoutManager(view.context)
         reView.adapter = reAdapter
 
@@ -112,11 +103,11 @@ class ClassSearchFragment : Fragment() {
                                 // todo: make subsections better
                                 if (section.subsections != null && section.subsections.isNotEmpty()) {
                                     var subsec = section.subsections[0]
-                                    arr.add(ClassData(
+                                    arr.add(Course(
+                                        0,
                                         result.courseCode,
                                         result.courseName,
-                                        if(subsec.startTime == null)"" else subsec.startTime,
-                                        if(subsec.endTime == null)"" else subsec.endTime,
+                                        if(subsec.startTime == null || subsec.endTime == null) "" else subsec.startTime + "-" + subsec.endTime,
                                         parseDays(subsec.day).toString().drop(1).dropLast(1),
                                         if(subsec.location == null)"" else subsec.location,
                                         subsec.professors.toString()
@@ -130,22 +121,16 @@ class ClassSearchFragment : Fragment() {
             })
         }
     }
-
-    // Factory method to create new instance of TimetableFragment, passing in bundle info
-    companion object {
-        fun newInstance(week: SchoolWeek) =
-            ClassSearchFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable("week", week)
-                }
-            }
-    }
 }
 
 /* Kotlin data/model classes that map the JSON response, we could also add Moshi
  * annotations to help the compiler with the mappings on a production app */
 data class AutofillData(val courseCode: String, val courseName: String, val courseProf: List<Prof>)
-data class Prof(val firstName: String, val lastName: String)
+data class Prof(val firstName: String, val lastName: String)  {
+    override fun toString(): String {
+        return "$firstName $lastName"
+    }
+}
 
 data class CourseSearchResult(val courseCode: String, val courseName: String, val sections: List<Section>)
 
@@ -163,4 +148,43 @@ interface UTableService {
     fun getSearchResult(
         @Query("search") search: String
     ) : Call<List<CourseSearchResult>>
+}
+
+// Function to parse passed in classDays string (formatted like: MWF, TWF, MTH, etc.)
+fun parseDays(str_: String): ArrayList<String>{
+    var str = str_
+    val arr = ArrayList<String>()
+
+    // Loop until str is empty, read first char, add day to list, then drop first char
+    // Special cases for T and TH since TH is the only one with two chars
+    while (str.isNotEmpty()){
+        if (str[0] == 'M') {
+            arr.add("Monday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'W') {
+            arr.add("Wednesday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'F') {
+            arr.add("Friday")
+            str = str.drop(1)
+            continue
+        }
+        if (str[0] == 'T') {
+            if (str.length > 1 && str[1] == 'H') {
+                arr.add("Thursday")
+                str = str.drop(2)
+                continue
+            }
+            arr.add("Tuesday")
+            str = str.drop(1)
+            continue
+        }
+        Log.e("TAG_", "String does not match any letters! $str")
+        break
+    }
+    return arr
 }

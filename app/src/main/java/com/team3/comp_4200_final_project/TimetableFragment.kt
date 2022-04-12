@@ -1,17 +1,22 @@
 package com.team3.comp_4200_final_project
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class TimetableFragment : Fragment() {
+class TimetableFragment(private val tab: Int) : Fragment() {
 
     // List of tab names
     private val tabs = arrayListOf(
@@ -28,7 +33,6 @@ class TimetableFragment : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
 
-    private lateinit var week: SchoolWeek
 
     // Overriding onCreateView
     override fun onCreateView(
@@ -37,25 +41,22 @@ class TimetableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        // Get SchoolWeek object from arguments
-        arguments?.let{
-            week = it.getSerializable("week") as? SchoolWeek?:SchoolWeek()
-        }
+        val view = inflater.inflate(R.layout.fragment_timetable, container, false)
 
+        // TimetableFragmentPagerAdapter extends FragmentStateAdapter()
+        fragmentPagerAdapter = TimetableFragmentPagerAdapter(childFragmentManager, tabs, lifecycle, view.context)
 
-        return inflater.inflate(R.layout.fragment_timetable, container, false)
+        // Get viewPager View and set it up
+        viewPager = view.findViewById(R.id.timetable_view_pager)
+        viewPager.adapter = fragmentPagerAdapter
+        viewPager.offscreenPageLimit = 2
+        viewPager.setCurrentItem(tab, false)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // TimetableFragmentPagerAdapter extends FragmentStateAdapter()
-        fragmentPagerAdapter = TimetableFragmentPagerAdapter(childFragmentManager, tabs, week, lifecycle)
-
-        // Get viewPager View and set the adapter
-        viewPager = view.findViewById(R.id.timetable_view_pager)
-        viewPager.adapter = fragmentPagerAdapter
-        viewPager.offscreenPageLimit = 2
 
         // Get tabLayout View and bind it to viewPager with TabLayoutMediator.
         // The lambda will set the tab text based on the value at that position in the array
@@ -68,17 +69,11 @@ class TimetableFragment : Fragment() {
         classSearchFAB = view.findViewById(R.id.class_search_FAB)
         classSearchFAB.setOnClickListener {
             val i = Intent(view.context, SearchActivity::class.java)
-            startActivity(i)
+            context?.startActivity(i)
         }
     }
 
-    // Factory method to create new instance of TimetableFragment, passing in bundle info
-    companion object {
-        fun newInstance(week: SchoolWeek) =
-            TimetableFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable("week", week)
-                }
-            }
+    fun getTab():Int {
+        return viewPager.currentItem
     }
 }
