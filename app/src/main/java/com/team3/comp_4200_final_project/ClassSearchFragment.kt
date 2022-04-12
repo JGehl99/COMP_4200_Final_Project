@@ -118,7 +118,7 @@ class ClassSearchFragment : Fragment() {
                                         if(subsec.startTime == null)"" else subsec.startTime,
                                         if(subsec.endTime == null)"" else subsec.endTime,
                                         parseDays(subsec.day).toString().drop(1).dropLast(1),
-                                        subsec.location,
+                                        if(subsec.location == null)"" else subsec.location,
                                         subsec.professors.toString()
                                     ))
                                 }
