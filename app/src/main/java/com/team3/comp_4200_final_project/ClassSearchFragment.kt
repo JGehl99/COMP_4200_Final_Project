@@ -28,6 +28,7 @@ class ClassSearchFragment : Fragment() {
     private lateinit var reView: RecyclerView       // Initializing reView
     private var arr: ArrayList<ClassData> = ArrayList()  // Creating ArrayList to hold Cards
     private lateinit var reAdapter: RecyclerAdapter // Initializing reAdapter
+    private  lateinit var week: SchoolWeek
 
     private lateinit var searchBar: AutoCompleteTextView
 
@@ -42,9 +43,14 @@ class ClassSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Get SchoolWeek object from arguments
+        arguments?.let{
+            week = it.getSerializable("week") as? SchoolWeek?:SchoolWeek()
+        }
+
         reView = view.findViewById(R.id.recycler_view)
 
-        reAdapter = RecyclerAdapter(context, arr)
+        reAdapter = RecyclerAdapter(context, arr, week)
         reView.layoutManager = LinearLayoutManager(view.context)
         reView.adapter = reAdapter
 
@@ -123,6 +129,16 @@ class ClassSearchFragment : Fragment() {
                 }
             })
         }
+    }
+
+    // Factory method to create new instance of TimetableFragment, passing in bundle info
+    companion object {
+        fun newInstance(week: SchoolWeek) =
+            ClassSearchFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("week", week)
+                }
+            }
     }
 }
 

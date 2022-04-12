@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.commit { replace(R.id.fragment, TimetableFragment.newInstance(week)) }
                 }
                 R.id.class_search -> {
-                    supportFragmentManager.commit { replace(R.id.fragment, ClassSearchFragment()) }
+                    supportFragmentManager.commit { replace(R.id.fragment, ClassSearchFragment.newInstance(week)) }
                 }
                 R.id.settings -> {
                     supportFragmentManager.commit { replace(R.id.fragment, SettingsFragment()) }
