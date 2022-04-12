@@ -1,13 +1,15 @@
 package com.team3.comp_4200_final_project
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
-import java.sql.Time
+import com.team3.comp_4200_final_project.db.AppDatabase
+import com.team3.comp_4200_final_project.db.Course
 
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var actionBarToggle: ActionBarDrawerToggle
@@ -18,85 +20,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //TODO: Retrieve the information for the user's timetable in MainActivity, and pass it
-        // along to TimetableFragment, which will then pass it along to DayFragment, using this
-        // ArrayList as a placeholder until we decide the structure of the data structure
-
-        // Data required to be passed (Strings):
-        // Course Code
-        // Course Name
-        // Course Start Time
-        // Course End Time
-        // Course Days (ex: MWF, must parse in app)
-        // Course Location (building w/ #, Livestream, or Online)
-        // Course Professor
-
-        val week = SchoolWeek()
-        week.addClass(ClassData(
-            "COMP-3340",
-            "World Wide Web",
-            "7:00pm",
-            "9:50pm",
-            "F",
-            "Online",
-            "Ziad Kobti"
-        ))
-        week.addClass(ClassData(
-            "COMP-3340",
-            "World Wide Web",
-            "7:00pm",
-            "9:50pm",
-            "F",
-            "Online",
-            "Ziad Kobti"
-        ))
-        week.addClass(ClassData(
-            "COMP-3340",
-            "World Wide Web",
-            "7:00pm",
-            "9:50pm",
-            "F",
-            "Online",
-            "Ziad Kobti"
-        ))
-        week.addClass(ClassData(
-            "COMP-4540",
-            "Theory of Computation",
-            "1:00pm",
-            "2:30pm",
-            "MW",
-            "Erie 2110",
-            "Peter Tsin"
-        ))
-        week.addClass(ClassData(
-            "COMP-4200",
-            "Mobile App Dev",
-            "11:30am",
-            "12:50pm",
-            "TTH",
-            "Livestream (Hyflex)",
-            "Shaon Shuvo"
-        ))
-        week.addClass(ClassData(
-            "ANZO-1000",
-            "Animals and Humans in Society",
-            "11:30am",
-            "12:50pm",
-            "TF",
-            "Livestream (Hyflex)",
-            "Jane Smith"
-        ))
-
-        // Display main fragment
+        // Display timetable fragment
         supportFragmentManager.commit {
-            replace(R.id.fragment, TimetableFragment.newInstance(week))
+            replace(R.id.fragment, TimetableFragment(0))
         }
 
         // Get drawerLayout
         drawerLayout = findViewById(R.id.drawerLayout)
 
         // Drawer Toggler
-        actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
+        actionBarToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            0,
+            0
+        )
+
         drawerLayout.addDrawerListener(actionBarToggle)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -109,10 +48,20 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.timetable -> {
-                    supportFragmentManager.commit { replace(R.id.fragment, TimetableFragment.newInstance(week)) }
+                    supportFragmentManager.commit {
+                        replace(
+                            R.id.fragment,
+                            TimetableFragment(0)
+                        )
+                    }
                 }
                 R.id.class_search -> {
-                    supportFragmentManager.commit { replace(R.id.fragment, ClassSearchFragment()) }
+                    supportFragmentManager.commit {
+                        replace(
+                            R.id.fragment,
+                            ClassSearchFragment()
+                        )
+                    }
                 }
                 R.id.settings -> {
                     supportFragmentManager.commit { replace(R.id.fragment, SettingsFragment()) }
@@ -138,6 +87,22 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    // onResume to reload TimetableFragment when course is deleted, also will keep the screen on the
+    // same tab
+    override fun onResume() {
+        super.onResume()
+        val frag = supportFragmentManager.findFragmentById(R.id.fragment)
+        if (frag is TimetableFragment) {
+            val tab = frag.getTab()
+            supportFragmentManager.commit{
+                replace(
+                    R.id.fragment,
+                    TimetableFragment(tab)
+                )
+            }
         }
     }
 }
