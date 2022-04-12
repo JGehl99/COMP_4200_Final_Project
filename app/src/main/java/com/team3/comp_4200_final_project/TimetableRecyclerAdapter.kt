@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.team3.comp_4200_final_project.db.Course
 
-class RecyclerAdapter (c: Context?, private val arr: ArrayList<ClassData>, private val week:SchoolWeek): RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>(){
+class TimetableRecyclerAdapter (c: Context?, private val arr: ArrayList<Course>): RecyclerView.Adapter<TimetableRecyclerAdapter.ItemViewHolder>(){
 
-    private lateinit var cardView: CardView     // Initializing CardView
     private var context: Context? = c            // Context passed in
 
     // ItemViewHolder class, get Views
@@ -39,16 +38,15 @@ class RecyclerAdapter (c: Context?, private val arr: ArrayList<ClassData>, priva
         holder.courseTimeRangeTextView.text = arr[position].courseTimeRange
         holder.courseDays.text = arr[position].courseDays
         holder.cardView.setOnClickListener {
-            // TODO: Add on click listener to either: bring up course page, or add to timetable
-             val i = Intent(this.context, ClassDetails::class.java).apply {
-                 putExtra("courseName", arr[position].courseName)
-                 putExtra("courseCode", arr[position].courseCode)
-                 putExtra("profName", arr[position].courseProfessor)
-                 putExtra("timeRange", arr[position].courseTimeRange)
-                 putExtra("courseDays", arr[position].courseDays)
-                 putExtra("courseLocation", arr[position].courseLocation)
-                 putExtra("week", week)
-             }
+            val i = Intent(this.context, TimetableClassDetails::class.java).apply {
+                putExtra("courseName", arr[position].courseName)
+                putExtra("courseCode", arr[position].courseCode)
+                putExtra("profName", arr[position].courseProfessor)
+                putExtra("timeRange", arr[position].courseTimeRange)
+                putExtra("courseDays", arr[position].courseDays)
+                putExtra("courseLocation", arr[position].courseLocation)
+                putExtra("id", arr[position].id)
+            }
             context?.startActivity(i)
         }
     }
