@@ -1,15 +1,14 @@
 package com.team3.comp_4200_final_project
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
-import com.team3.comp_4200_final_project.db.AppDatabase
-import com.team3.comp_4200_final_project.db.Course
+import com.team3.comp_4200_final_project.class_search.ClassSearchFragment
+import com.team3.comp_4200_final_project.timetable.TimetableFragment
 
 private lateinit var drawerLayout: DrawerLayout
 private lateinit var actionBarToggle: ActionBarDrawerToggle

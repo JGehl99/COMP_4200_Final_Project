@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/ic_add"
         tools:ignore="ImageContrastCheck"/>
 
-    <com.team3.comp_4200_final_project.TimetableTabLayout
+    <com.team3.comp_4200_final_project.timetable.TimetableTabLayout
         android:id="@+id/timetable_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

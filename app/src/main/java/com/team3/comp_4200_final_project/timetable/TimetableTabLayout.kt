@@ -1,4 +1,4 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
+import com.team3.comp_4200_final_project.R
 
 // Custom TabLayout to add separators between tabs, and to stretch tabs to fit TabBar if there aren't
 // enough tabs to cover the whole bar

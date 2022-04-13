@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">UTable</string>
     <string name="hello_world">Hello, World!</string>
-    <string name="uwindsor_logo">UWindsor Logo</string>
+    <string name="utable_logo">UTable Logo</string>
     <string name="settings">Settings</string>
     <string name="hello_second_activity">Hello, Second Activity!</string>
     <string name="hello_fragment">Hello, Fragment!</string>

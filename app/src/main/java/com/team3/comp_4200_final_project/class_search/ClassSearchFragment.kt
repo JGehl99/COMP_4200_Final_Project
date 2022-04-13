@@ -1,4 +1,4 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.class_search
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.team3.comp_4200_final_project.R
 import com.team3.comp_4200_final_project.db.Course
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +52,7 @@ class ClassSearchFragment : Fragment() {
             .build()
             .create(UTableService::class.java)
 
-        var autofillStrings = mutableListOf<String>()
+        val autofillStrings = mutableListOf<String>()
         service.getCourses().enqueue(object : Callback<List<AutofillData>> {
 
             /* The HTTP call failed. This method is run on the main thread */
@@ -64,22 +65,21 @@ class ClassSearchFragment : Fragment() {
              * on a production app. This method is run on the main thread */
             override fun onResponse(call: Call<List<AutofillData>>, response: Response<List<AutofillData>>) {
                 /* This will print the response of the network call to the Logcat */
-                var results = response.body()
+                val results = response.body()
                 if (results != null) {
                     for (result in results) {
                         autofillStrings.add(result.courseCode)
                         autofillStrings.add(result.courseName)
                     }
                 }
-                //Log.d("TAG_", results.toString())
             }
         })
 
-        var aa = ArrayAdapter<String>(view.context, android.R.layout.simple_dropdown_item_1line, autofillStrings)
+        val aa = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, autofillStrings)
         searchBar = view.findViewById(R.id.search_field)
         searchBar.setAdapter(aa)
 
-        var searchButton : Button = view.findViewById(R.id.search_button)
+        val searchButton : Button = view.findViewById(R.id.search_button)
         searchButton.setOnClickListener {
             service.getSearchResult(searchBar.text.toString()).enqueue(object : Callback<List<CourseSearchResult>> {
 
@@ -93,7 +93,7 @@ class ClassSearchFragment : Fragment() {
                  * on a production app. This method is run on the main thread */
                 override fun onResponse(call: Call<List<CourseSearchResult>>, response: Response<List<CourseSearchResult>>) {
                     /* This will print the response of the network call to the Logcat */
-                    var results = response.body()
+                    val results = response.body()
                     if (results != null) {
                         arr.clear()
                         for(result in results) {
@@ -102,7 +102,7 @@ class ClassSearchFragment : Fragment() {
                                 if (section.semester_id == 3) // set this to latest semester each time, IK its bad
                                 // todo: make subsections better
                                 if (section.subsections != null && section.subsections.isNotEmpty()) {
-                                    var subsec = section.subsections[0]
+                                    val subsec = section.subsections[0]
                                     arr.add(Course(
                                         0,
                                         result.courseCode,

@@ -1,6 +1,5 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
-import android.util.Log
 import com.team3.comp_4200_final_project.db.Course
 import java.io.Serializable
 

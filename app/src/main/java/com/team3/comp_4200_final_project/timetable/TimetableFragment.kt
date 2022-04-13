@@ -1,20 +1,17 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.team3.comp_4200_final_project.R
+import com.team3.comp_4200_final_project.class_search.SearchActivity
 
 class TimetableFragment(private val tab: Int) : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.team3.comp_4200_final_project.R
 import com.team3.comp_4200_final_project.db.Course
 
 // Value that is passed in through bundle

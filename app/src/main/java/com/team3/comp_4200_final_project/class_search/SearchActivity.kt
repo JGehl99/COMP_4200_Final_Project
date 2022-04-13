@@ -1,18 +1,13 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.class_search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
+import com.team3.comp_4200_final_project.R
 
-// Activity that is shown when the FAB button on TimetableFragment is clicked
+// Activity that is shown when the FAB button on TimetableFragment is clicked, just displays
+// ClassSearchFragment
 
 class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

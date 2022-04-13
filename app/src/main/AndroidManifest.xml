@@ -4,13 +4,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_uwin"
+        android:icon="@mipmap/ic_utable"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_uwin_round"
+        android:roundIcon="@mipmap/ic_utable_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.COMP_4200_Final_Project">
         <activity
-            android:name=".ClassSearchClassDetails"
+            android:name=".class_search.ClassSearchClassDetails"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name=".class_search.SearchActivity"
             android:exported="true"/>
         <activity
-            android:name=".TimetableClassDetails"
+            android:name=".timetable.TimetableClassDetails"
             android:exported="true"/>
     </application>
 

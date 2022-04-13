@@ -1,4 +1,4 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.team3.comp_4200_final_project.db.AppDatabase
 import com.team3.comp_4200_final_project.db.Course
-import com.team3.comp_4200_final_project.db.CourseDao
 
 class TimetableFragmentPagerAdapter(
     fm: FragmentManager,
@@ -32,7 +31,7 @@ class TimetableFragmentPagerAdapter(
 
     // Pass ArrayList of classes for specific day to corresponding DayFragment
     override fun createFragment(position: Int): Fragment {
-        return DayFragment.newInstance(week.weekHashMap[dayArrayList[position]]?:ArrayList())
+        return DayFragment.newInstance(week.weekHashMap[dayArrayList[position]] ?: ArrayList())
     }
 
 }

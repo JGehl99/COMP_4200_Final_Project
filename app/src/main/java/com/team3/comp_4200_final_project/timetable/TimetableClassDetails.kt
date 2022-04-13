@@ -1,18 +1,20 @@
-package com.team3.comp_4200_final_project
+package com.team3.comp_4200_final_project.timetable
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.team3.comp_4200_final_project.R
 import com.team3.comp_4200_final_project.db.AppDatabase
-import com.team3.comp_4200_final_project.db.Course
 
-class ClassSearchClassDetails : AppCompatActivity() {
+class TimetableClassDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_class_search_class_details)
+        setContentView(R.layout.activity_timetable_class_details)
 
-        // Start up DB and Dao
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val db = AppDatabase.getInstance(this)
         val courseDao = db.courseDao()
 
@@ -23,6 +25,7 @@ class ClassSearchClassDetails : AppCompatActivity() {
         val courseTimes = intent.getStringExtra("timeRange") ?: ""
         val courseDays = intent.getStringExtra("courseDays") ?: ""
         val courseLocation = intent.getStringExtra("courseLocation") ?: ""
+        val courseID = intent.getIntExtra("id", -1)
 
         //Get and assign the corresponding textViews
         val courseNameDetailsTextView: TextView = findViewById(R.id.course_name_details)
@@ -37,7 +40,7 @@ class ClassSearchClassDetails : AppCompatActivity() {
         courseNameDetailsTextView.text = nameCode
 
         val professorName = "Professor: $profName"
-        courseProfTextView.text = professorName
+        courseProfTextView.text = professorName.replace("[","").replace("]","")
 
         val classDays = "Class held on: $courseDays"
         courseTimesTextView.text = classDays
@@ -48,20 +51,20 @@ class ClassSearchClassDetails : AppCompatActivity() {
         val classLocation = "Location: $courseLocation"
         courseLocationTextView.text = classLocation
 
-        // onClick to add Course to db
+        // onClick to remove course from timetable
         addButton.setOnClickListener {
-            courseDao.insert(
-                Course(
-                    0,
-                    courseCode,
-                    courseName,
-                    courseTimes,
-                    courseDays,
-                    courseLocation,
-                    profName
-                )
-            )
-            finish()    // Close activity
+            courseDao.delete(courseID)
+            finish()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
