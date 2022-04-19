@@ -1,10 +1,15 @@
 package com.team3.comp_4200_final_project.class_search
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.team3.comp_4200_final_project.NotificationReceiver
 import com.team3.comp_4200_final_project.R
 import com.team3.comp_4200_final_project.db.AppDatabase
 import com.team3.comp_4200_final_project.db.Course
@@ -54,16 +59,30 @@ class ClassSearchClassDetails : AppCompatActivity() {
 
         // onClick to add Course to db
         addButton.setOnClickListener {
-            courseDao.insert(
-                Course(
-                    0,
-                    courseCode,
-                    courseName,
-                    courseTimes,
-                    courseDays,
-                    courseLocation,
-                    profName
-                )
+            val course = Course(
+                0,
+                courseCode,
+                courseName,
+                courseTimes,
+                courseDays,
+                courseLocation,
+                profName
+            )
+            courseDao.insert(course)
+
+            // Notification Stuff
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(applicationContext, NotificationReceiver::class.java)
+            intent.putExtra("courseName", course.courseName)
+
+            val pendingIntent = PendingIntent.getBroadcast(applicationContext, course.id,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + 10000,
+                AlarmManager.INTERVAL_DAY * 7,
+                pendingIntent
             )
             finish()    // Close activity
         }
