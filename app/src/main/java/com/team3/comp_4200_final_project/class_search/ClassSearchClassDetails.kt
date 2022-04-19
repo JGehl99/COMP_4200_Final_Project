@@ -1,5 +1,6 @@
 package com.team3.comp_4200_final_project.class_search
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -18,6 +19,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ClassSearchClassDetails : AppCompatActivity() {
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_class_search_class_details)
@@ -85,10 +87,14 @@ class ClassSearchClassDetails : AppCompatActivity() {
             intent.putExtra("courseTime", course.courseTimeRange)
 
             for (i in notifTimes.indices) {
+                val courseID = courseDao.get(courseCode, courseDays, courseTimes, profName, courseLocation).id
                 val pendingIntent = PendingIntent.getBroadcast(
-                    applicationContext, course.id * 10 + i,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT
+                    applicationContext,
+                    courseID * 10 + i,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
                 )
+                Log.d(TAG, "onReceive: " + (courseID * 10 + i))
 
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
