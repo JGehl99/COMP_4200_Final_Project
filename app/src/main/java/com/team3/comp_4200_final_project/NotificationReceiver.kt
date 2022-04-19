@@ -17,12 +17,15 @@ class NotificationReceiver: BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val TAG = "courseName"
-        val course = intent.getStringExtra("courseName")
-        Log.d(TAG, "onReceive: " + course)
+        val TAG = "NotifReceiverClass"
+        val courseName = intent.getStringExtra("courseName")
+        val courseTime = intent.getStringExtra("courseTime")
+        Log.d(TAG, "onReceive: " + courseName)
         createNotificationChannel(context)
-        if (course != null) {
-            notifyNotification(context, course)
+        if (courseName != null) {
+            if (courseTime != null) {
+                notifyNotification(context, courseName, courseTime)
+            }
         }
     }
 
@@ -38,11 +41,11 @@ class NotificationReceiver: BroadcastReceiver() {
         }
     }
 
-    private fun notifyNotification(context: Context, courseName: String) {
+    private fun notifyNotification(context: Context, courseName: String, courseTime: String) {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle("UTable")
-                .setContentText(courseName)
+                .setContentTitle(courseName)
+                .setContentText(courseTime)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
 
