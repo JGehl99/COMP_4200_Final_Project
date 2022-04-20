@@ -25,6 +25,9 @@ interface CourseDao {
     @Query("SELECT * FROM courses")
     fun getAll(): List<Course>
 
+    @Query("SELECT * FROM courses WHERE courseCode=:courseCode AND courseDays=:courseDays AND courseTimeRange=:courseTimeRange AND courseProfessor=:courseProfessor AND courseLocation=:courseLocation")
+    fun get(courseCode: String, courseDays: String, courseTimeRange: String, courseProfessor: String, courseLocation: String): Course
+
     @Query("DELETE FROM courses WHERE id=:id")
     fun delete(id: Int)
 

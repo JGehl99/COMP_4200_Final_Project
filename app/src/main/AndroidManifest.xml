@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_utable_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.COMP_4200_Final_Project">
+        <receiver android:name=".NotificationReceiver"
+            android:exported="false"/>
         <activity
             android:name=".class_search.ClassSearchClassDetails"
             android:exported="false" />

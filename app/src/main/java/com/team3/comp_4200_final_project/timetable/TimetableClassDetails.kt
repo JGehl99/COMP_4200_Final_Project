@@ -1,14 +1,19 @@
 package com.team3.comp_4200_final_project.timetable
 
+import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.team3.comp_4200_final_project.NotificationReceiver
 import com.team3.comp_4200_final_project.R
 import com.team3.comp_4200_final_project.db.AppDatabase
 
 class TimetableClassDetails : AppCompatActivity() {
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timetable_class_details)
@@ -53,6 +58,20 @@ class TimetableClassDetails : AppCompatActivity() {
 
         // onClick to remove course from timetable
         addButton.setOnClickListener {
+            // remove alarmManagers for notifications
+            val numOfClassDays = classDays.split(",")
+
+            for (i in numOfClassDays.indices) {
+                val pendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    courseID * 10 + i,
+                    Intent(this, NotificationReceiver::class.java),
+                    PendingIntent.FLAG_NO_CREATE
+                )
+                pendingIntent?.cancel()
+            }
+
+            // remove from DB
             courseDao.delete(courseID)
             finish()
         }

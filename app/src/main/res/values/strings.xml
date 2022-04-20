@@ -19,4 +19,11 @@
     <string name="home">Home</string>
     <string name="fab_to_launch_class_search_activity">fab_to_launch_class_search_activity</string>
     <string name="hello_day_fragment">Hello, Day Fragment!</string>
+    <string name="settings_fragment_notification">Notify me about classes:</string>
+    <string name="settings_fragment_message">Note: Only new classes added will obey this</string>
+    <string-array name="notification_times">
+        <item>15 Minutes Before</item>
+        <item>30 Minutes Before</item>
+        <item>1 Hour Before</item>
+    </string-array>
 </resources>
