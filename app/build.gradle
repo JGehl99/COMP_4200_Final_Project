@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.team3.comp_4200_final_project"
         minSdk 21
-        targetSdk 32
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
