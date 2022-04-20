@@ -1,9 +1,5 @@
 package com.team3.comp_4200_final_project
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,13 +15,6 @@ private lateinit var actionBarToggle: ActionBarDrawerToggle
 private lateinit var navView: NavigationView
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val SHARED_PREFERENCES_NAME = "time"
-        private const val ALARM_KEY = "alarm"
-        private const val ONOFF_KEY = "onOff"
-        private const val ALARM_REQUEST_CODE = 1000
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

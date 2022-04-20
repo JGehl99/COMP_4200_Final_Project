@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
@@ -61,10 +60,8 @@ class TimetableClassDetails : AppCompatActivity() {
         addButton.setOnClickListener {
             // remove alarmManagers for notifications
             val numOfClassDays = classDays.split(",")
-            val TAG = "NotifReceiverClass"
 
             for (i in numOfClassDays.indices) {
-                Log.d(TAG, "setOnClickListener: " + (courseID * 10 + i))
                 val pendingIntent = PendingIntent.getBroadcast(
                     this,
                     courseID * 10 + i,

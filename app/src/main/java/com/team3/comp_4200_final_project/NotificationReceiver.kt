@@ -17,10 +17,8 @@ class NotificationReceiver: BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val TAG = "NotifReceiverClass"
         val courseName = intent.getStringExtra("courseName")
         val courseTime = intent.getStringExtra("courseTime")
-        Log.d(TAG, "onReceive: " + courseName)
         createNotificationChannel(context)
         if (courseName != null) {
             if (courseTime != null) {
@@ -36,7 +34,6 @@ class NotificationReceiver: BroadcastReceiver() {
                 "Notification Channel",
                 NotificationManager.IMPORTANCE_HIGH
             )
-
             NotificationManagerCompat.from(context).createNotificationChannel(notificationChannel)
         }
     }
